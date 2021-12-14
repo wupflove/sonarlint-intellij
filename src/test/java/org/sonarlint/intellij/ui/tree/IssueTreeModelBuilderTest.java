@@ -22,6 +22,7 @@ package org.sonarlint.intellij.ui.tree;
 import com.intellij.openapi.editor.RangeMarker;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
+
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,11 +33,12 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 import javax.swing.tree.DefaultTreeModel;
+
 import org.junit.Test;
 import org.sonarlint.intellij.issue.LiveIssue;
 import org.sonarlint.intellij.ui.nodes.AbstractNode;
 import org.sonarlint.intellij.ui.nodes.IssueNode;
-import org.sonarsource.sonarlint.core.client.api.common.analysis.ClientInputFile;
+import org.sonarsource.sonarlint.core.analysis.api.ClientInputFile;
 import org.sonarsource.sonarlint.core.client.api.common.analysis.Issue;
 
 import static org.assertj.core.api.Assertions.assertThat;

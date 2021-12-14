@@ -24,23 +24,25 @@ import com.intellij.notification.Notification;
 import com.intellij.notification.Notifications;
 import com.intellij.notification.NotificationsAdapter;
 import com.intellij.notification.NotificationsManager;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonarlint.intellij.AbstractSonarLintLightTests;
-import org.sonarsource.sonarlint.core.client.api.common.Language;
+import org.sonarsource.sonarlint.core.analysis.api.AnalysisResults;
+import org.sonarsource.sonarlint.core.analysis.api.ClientInputFile;
 import org.sonarsource.sonarlint.core.client.api.common.PluginDetails;
-import org.sonarsource.sonarlint.core.client.api.common.SkipReason;
-import org.sonarsource.sonarlint.core.client.api.common.analysis.AnalysisResults;
-import org.sonarsource.sonarlint.core.client.api.common.analysis.ClientInputFile;
+import org.sonarsource.sonarlint.core.commons.Language;
+import org.sonarsource.sonarlint.core.plugin.commons.SkipReason;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

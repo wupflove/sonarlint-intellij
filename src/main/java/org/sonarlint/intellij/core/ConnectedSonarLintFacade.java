@@ -23,24 +23,26 @@ import com.google.common.base.Preconditions;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
+
 import org.sonarlint.intellij.common.ui.SonarLintConsole;
 import org.sonarlint.intellij.notifications.AnalysisRequirementNotifications;
 import org.sonarlint.intellij.util.ProjectLogOutput;
 import org.sonarlint.intellij.util.SonarLintAppUtils;
+import org.sonarsource.sonarlint.core.analysis.api.AnalysisResults;
+import org.sonarsource.sonarlint.core.analysis.api.ClientInputFile;
 import org.sonarsource.sonarlint.core.client.api.common.PluginDetails;
-import org.sonarsource.sonarlint.core.client.api.common.ProgressMonitor;
-import org.sonarsource.sonarlint.core.client.api.common.analysis.AnalysisResults;
-import org.sonarsource.sonarlint.core.client.api.common.analysis.ClientInputFile;
 import org.sonarsource.sonarlint.core.client.api.common.analysis.IssueListener;
 import org.sonarsource.sonarlint.core.client.api.connected.ConnectedAnalysisConfiguration;
 import org.sonarsource.sonarlint.core.client.api.connected.ConnectedRuleDetails;
 import org.sonarsource.sonarlint.core.client.api.connected.ConnectedSonarLintEngine;
+import org.sonarsource.sonarlint.core.commons.progress.ClientProgressMonitor;
 
 import static org.sonarlint.intellij.common.util.SonarLintUtils.getService;
 
@@ -59,7 +61,7 @@ class ConnectedSonarLintFacade extends SonarLintFacade {
 
   @Override
   protected AnalysisResults analyze(Module module, Path baseDir, Path workDir, Collection<ClientInputFile> inputFiles, Map<String, String> props,
-    IssueListener issueListener, ProgressMonitor progressMonitor) {
+                                    IssueListener issueListener, ClientProgressMonitor progressMonitor) {
     var config = ConnectedAnalysisConfiguration.builder()
       .setBaseDir(baseDir)
       .addInputFiles(inputFiles)

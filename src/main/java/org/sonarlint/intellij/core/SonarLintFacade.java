@@ -22,6 +22,7 @@ package org.sonarlint.intellij.core;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
@@ -30,12 +31,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import javax.annotation.CheckForNull;
+
+import org.sonarsource.sonarlint.core.analysis.api.AnalysisResults;
+import org.sonarsource.sonarlint.core.analysis.api.ClientInputFile;
 import org.sonarsource.sonarlint.core.client.api.common.PluginDetails;
-import org.sonarsource.sonarlint.core.client.api.common.ProgressMonitor;
 import org.sonarsource.sonarlint.core.client.api.common.RuleDetails;
-import org.sonarsource.sonarlint.core.client.api.common.analysis.AnalysisResults;
-import org.sonarsource.sonarlint.core.client.api.common.analysis.ClientInputFile;
 import org.sonarsource.sonarlint.core.client.api.common.analysis.IssueListener;
+import org.sonarsource.sonarlint.core.commons.progress.ClientProgressMonitor;
+import org.sonarsource.sonarlint.core.commons.progress.ProgressMonitor;
 
 import static org.sonarlint.intellij.config.Settings.getSettingsFor;
 
@@ -47,13 +50,13 @@ public abstract class SonarLintFacade {
   }
 
   protected abstract AnalysisResults analyze(Module module, Path baseDir, Path workDir, Collection<ClientInputFile> inputFiles, Map<String, String> props,
-    IssueListener issueListener, ProgressMonitor progressMonitor);
+    IssueListener issueListener, ClientProgressMonitor progressMonitor);
 
   @CheckForNull
   public abstract RuleDetails getActiveRuleDetails(String ruleKey);
 
   public synchronized AnalysisResults startAnalysis(Module module, List<ClientInputFile> inputFiles, IssueListener issueListener,
-    Map<String, String> additionalProps, ProgressMonitor progressMonitor) {
+                                                    Map<String, String> additionalProps, ClientProgressMonitor progressMonitor) {
     var baseDir = Paths.get(project.getBasePath());
     var workDir = baseDir.resolve(Project.DIRECTORY_STORE_FOLDER).resolve("sonarlint").toAbsolutePath();
     var props = new HashMap<String, String>();

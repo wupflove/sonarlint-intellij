@@ -51,6 +51,7 @@ import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.SwingHelper;
 import com.intellij.util.ui.UIUtil;
 import com.intellij.util.ui.tree.TreeUtil;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -89,6 +90,7 @@ import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.NumberFormatter;
 import javax.swing.tree.TreePath;
+
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.sonarlint.intellij.common.util.SonarLintUtils;
@@ -97,9 +99,9 @@ import org.sonarlint.intellij.config.global.SonarLintGlobalSettings;
 import org.sonarlint.intellij.core.SonarLintEngineManager;
 import org.sonarlint.intellij.ui.ruledescription.RuleDescriptionHTMLEditorKit;
 import org.sonarlint.intellij.util.GlobalLogOutput;
-import org.sonarsource.sonarlint.core.client.api.common.LogOutput;
 import org.sonarsource.sonarlint.core.client.api.common.RuleDetails;
 import org.sonarsource.sonarlint.core.client.api.standalone.StandaloneRuleDetails;
+import org.sonarsource.sonarlint.core.commons.log.ClientLogOutput;
 
 import static org.sonarlint.intellij.config.Settings.getGlobalSettings;
 import static org.sonarlint.intellij.ui.ruledescription.RuleDescriptionHTMLEditorKit.appendRuleAttributesHtmlTable;
@@ -545,7 +547,7 @@ public class RuleConfigurationPanel implements Disposable, ConfigurationPanel<So
           createBooleanParam(rule, configPanel, constraints, param);
           break;
         default:
-          GlobalLogOutput.get().log("Unknown rule parameter type: " + param.type + " for rule " + rule.getKey(), LogOutput.Level.ERROR);
+          GlobalLogOutput.get().log("Unknown rule parameter type: " + param.type + " for rule " + rule.getKey(), ClientLogOutput.Level.ERROR);
       }
       constraints.gridy++;
     }

@@ -21,16 +21,17 @@ package org.sonarlint.intellij.core;
 
 import java.util.Collections;
 import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.sonarlint.intellij.AbstractSonarLintLightTests;
-import org.sonarsource.sonarlint.core.client.api.common.LogOutput;
-import org.sonarsource.sonarlint.core.client.api.common.ProgressMonitor;
-import org.sonarsource.sonarlint.core.client.api.common.analysis.AnalysisResults;
+import org.sonarsource.sonarlint.core.analysis.api.AnalysisResults;
 import org.sonarsource.sonarlint.core.client.api.common.analysis.IssueListener;
 import org.sonarsource.sonarlint.core.client.api.standalone.StandaloneAnalysisConfiguration;
 import org.sonarsource.sonarlint.core.client.api.standalone.StandaloneRuleDetails;
 import org.sonarsource.sonarlint.core.client.api.standalone.StandaloneSonarLintEngine;
+import org.sonarsource.sonarlint.core.commons.log.ClientLogOutput;
+import org.sonarsource.sonarlint.core.commons.progress.ClientProgressMonitor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -74,7 +75,7 @@ public class StandaloneSonarLintFacadeTest extends AbstractSonarLintLightTests {
   @Test
   public void should_start_analysis() {
     var results = mock(AnalysisResults.class);
-    when(engine.analyze(any(StandaloneAnalysisConfiguration.class), any(IssueListener.class), any(LogOutput.class), any(ProgressMonitor.class))).thenReturn(results);
-    assertThat(facade.startAnalysis(getModule(), Collections.emptyList(), mock(IssueListener.class), Collections.emptyMap(), mock(ProgressMonitor.class))).isEqualTo(results);
+    when(engine.analyze(any(StandaloneAnalysisConfiguration.class), any(IssueListener.class), any(ClientLogOutput.class), any(ClientProgressMonitor.class))).thenReturn(results);
+    assertThat(facade.startAnalysis(getModule(), Collections.emptyList(), mock(IssueListener.class), Collections.emptyMap(), mock(ClientProgressMonitor.class))).isEqualTo(results);
   }
 }

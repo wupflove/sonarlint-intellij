@@ -168,7 +168,6 @@ public class SonarLintEngineManager implements Disposable {
   @Override
   public void dispose() {
     stopAllEngines(false);
-    Loggers.setTarget(null);
   }
 
   @Nullable

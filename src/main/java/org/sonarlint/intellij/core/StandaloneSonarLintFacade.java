@@ -23,6 +23,7 @@ import com.google.common.base.Preconditions;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,19 +31,20 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
+
 import org.sonarlint.intellij.common.ui.SonarLintConsole;
 import org.sonarlint.intellij.common.util.SonarLintUtils;
 import org.sonarlint.intellij.notifications.AnalysisRequirementNotifications;
 import org.sonarlint.intellij.util.ProjectLogOutput;
+import org.sonarsource.sonarlint.core.analysis.api.AnalysisResults;
+import org.sonarsource.sonarlint.core.analysis.api.ClientInputFile;
 import org.sonarsource.sonarlint.core.client.api.common.PluginDetails;
-import org.sonarsource.sonarlint.core.client.api.common.ProgressMonitor;
 import org.sonarsource.sonarlint.core.client.api.common.RuleKey;
-import org.sonarsource.sonarlint.core.client.api.common.analysis.AnalysisResults;
-import org.sonarsource.sonarlint.core.client.api.common.analysis.ClientInputFile;
 import org.sonarsource.sonarlint.core.client.api.common.analysis.IssueListener;
 import org.sonarsource.sonarlint.core.client.api.standalone.StandaloneAnalysisConfiguration;
 import org.sonarsource.sonarlint.core.client.api.standalone.StandaloneRuleDetails;
 import org.sonarsource.sonarlint.core.client.api.standalone.StandaloneSonarLintEngine;
+import org.sonarsource.sonarlint.core.commons.progress.ClientProgressMonitor;
 
 import static org.sonarlint.intellij.config.Settings.getGlobalSettings;
 
@@ -59,7 +61,7 @@ final class StandaloneSonarLintFacade extends SonarLintFacade {
 
   @Override
   protected AnalysisResults analyze(Module module, Path baseDir, Path workDir, Collection<ClientInputFile> inputFiles, Map<String, String> props,
-    IssueListener issueListener, ProgressMonitor progressMonitor) {
+                                    IssueListener issueListener, ClientProgressMonitor progressMonitor) {
     var excluded = new ArrayList<RuleKey>();
     var included = new ArrayList<RuleKey>();
     var params = new HashMap<RuleKey, Map<String, String>>();

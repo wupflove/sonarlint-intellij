@@ -23,6 +23,7 @@ import com.intellij.execution.process.OSProcessUtil;
 import com.intellij.openapi.application.PathManager;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.util.PlatformUtils;
+
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -35,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.CheckForNull;
+
 import org.jetbrains.annotations.NotNull;
 import org.sonarlint.intellij.SonarLintPlugin;
 import org.sonarlint.intellij.common.LanguageActivator;
@@ -44,12 +46,12 @@ import org.sonarlint.intellij.util.GlobalLogOutput;
 import org.sonarsource.sonarlint.core.ConnectedSonarLintEngineImpl;
 import org.sonarsource.sonarlint.core.StandaloneSonarLintEngineImpl;
 import org.sonarsource.sonarlint.core.client.api.common.AbstractGlobalConfiguration;
-import org.sonarsource.sonarlint.core.client.api.common.Language;
-import org.sonarsource.sonarlint.core.client.api.common.LogOutput;
 import org.sonarsource.sonarlint.core.client.api.connected.ConnectedGlobalConfiguration;
 import org.sonarsource.sonarlint.core.client.api.connected.ConnectedSonarLintEngine;
 import org.sonarsource.sonarlint.core.client.api.standalone.StandaloneGlobalConfiguration;
 import org.sonarsource.sonarlint.core.client.api.standalone.StandaloneSonarLintEngine;
+import org.sonarsource.sonarlint.core.commons.Language;
+import org.sonarsource.sonarlint.core.commons.log.ClientLogOutput;
 
 public class SonarLintEngineFactory {
 
@@ -192,7 +194,7 @@ public class SonarLintEngineFactory {
       try (var directoryStream = Files.newDirectoryStream(pluginsDir, pattern)) {
         var globalLogOutput = SonarLintUtils.getService(GlobalLogOutput.class);
         for (var path : directoryStream) {
-          globalLogOutput.log(logPrefix + path.getFileName().toString(), LogOutput.Level.DEBUG);
+          globalLogOutput.log(logPrefix + path.getFileName().toString(), ClientLogOutput.Level.DEBUG);
           pluginsUrls.add(path.toUri().toURL());
         }
       }
@@ -227,7 +229,7 @@ public class SonarLintEngineFactory {
     } else if (SystemInfo.isLinux) {
       osDir = "linux";
     } else {
-      GlobalLogOutput.get().log("Unsupported platform for Omnisharp", LogOutput.Level.WARN);
+      GlobalLogOutput.get().log("Unsupported platform for Omnisharp", ClientLogOutput.Level.WARN);
       return;
     }
     extraProps.put("sonar.cs.internal.omnisharpLocation", plugin.getPath().resolve("omnisharp").resolve(osDir).toString());

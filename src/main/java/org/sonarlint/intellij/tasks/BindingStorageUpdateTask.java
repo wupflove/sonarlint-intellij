@@ -30,12 +30,14 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.util.messages.Topic;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.sonarlint.intellij.common.ui.SonarLintConsole;
@@ -47,11 +49,11 @@ import org.sonarlint.intellij.trigger.SonarLintSubmitter;
 import org.sonarlint.intellij.trigger.TriggerType;
 import org.sonarlint.intellij.util.GlobalLogOutput;
 import org.sonarlint.intellij.util.TaskProgressMonitor;
-import org.sonarsource.sonarlint.core.client.api.common.LogOutput;
-import org.sonarsource.sonarlint.core.client.api.common.Version;
 import org.sonarsource.sonarlint.core.client.api.connected.ConnectedSonarLintEngine;
 import org.sonarsource.sonarlint.core.client.api.connected.SonarAnalyzer;
-import org.sonarsource.sonarlint.core.client.api.exceptions.CanceledException;
+import org.sonarsource.sonarlint.core.commons.Version;
+import org.sonarsource.sonarlint.core.commons.log.ClientLogOutput;
+import org.sonarsource.sonarlint.core.commons.progress.CanceledException;
 
 import static java.util.stream.Collectors.toSet;
 import static org.sonarlint.intellij.common.util.SonarLintUtils.getService;
@@ -108,7 +110,7 @@ public class BindingStorageUpdateTask {
         if (!tooOld.isEmpty()) {
           ApplicationManager.getApplication().invokeAndWait(() -> Messages.showWarningDialog(buildMinimumVersionFailMessage(tooOld), "Analyzers Not Loaded"), ModalityState.any());
         }
-        GlobalLogOutput.get().log("Storage for connection '" + connection.getName() + "' updated", LogOutput.Level.INFO);
+        GlobalLogOutput.get().log("Storage for connection '" + connection.getName() + "' updated", ClientLogOutput.Level.INFO);
       }
 
       if (updateProjectsStorage) {
@@ -116,7 +118,7 @@ public class BindingStorageUpdateTask {
       }
 
     } catch (CanceledException e) {
-      GlobalLogOutput.get().log("Update of storage for connection '" + connection.getName() + "' was cancelled", LogOutput.Level.INFO);
+      GlobalLogOutput.get().log("Update of storage for connection '" + connection.getName() + "' was cancelled", ClientLogOutput.Level.INFO);
     } catch (Exception e) {
       GlobalLogOutput.get().logError("Error updating the storage for connection '" + connection.getName() + "'", e);
       final var msg = (e.getMessage() != null) ? e.getMessage() : ("Failed to update the binding for connection '" + connection.getName() + "'");

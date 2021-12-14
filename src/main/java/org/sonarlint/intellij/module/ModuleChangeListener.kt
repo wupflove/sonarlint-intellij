@@ -28,7 +28,7 @@ import org.sonarlint.intellij.common.util.SonarLintUtils.getService
 import org.sonarlint.intellij.core.ModuleBindingManager
 import org.sonarlint.intellij.messages.ProjectEngineListener
 import org.sonarlint.intellij.util.ThreadPoolExecutor
-import org.sonarsource.sonarlint.core.client.api.common.ModuleInfo
+import org.sonarsource.sonarlint.core.analysis.api.ClientModuleInfo
 import org.sonarsource.sonarlint.core.client.api.common.SonarLintEngine
 
 private fun getEngineIfStarted(module: Module) =
@@ -52,7 +52,7 @@ object Modules {
     }
 
     fun declareModule(project: Project, engine: SonarLintEngine?, module: Module) {
-        val moduleInfo = ModuleInfo(module, ModuleFileSystem(project, module))
+        val moduleInfo = ClientModuleInfo(module, ModuleFileSystem(project, module))
         getService(ModulesRegistry::class.java).add(module, moduleInfo)
         engine?.let { executor.execute { it.declareModule(moduleInfo) } }
     }
