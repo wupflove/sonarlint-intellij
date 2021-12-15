@@ -155,7 +155,7 @@ public class ProjectBindingManager {
       notifications.notifyConnectionIdInvalid();
       throw new InvalidBindingException("Project has an invalid binding");
     } else if (projectKey == null) {
-      notifications.notifyModuleInvalid();
+      notifications.notifyProjectStorageInvalid();
       throw new InvalidBindingException("Project has an invalid binding");
     }
   }

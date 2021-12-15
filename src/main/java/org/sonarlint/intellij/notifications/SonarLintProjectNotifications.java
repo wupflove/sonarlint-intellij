@@ -70,7 +70,7 @@ public class SonarLintProjectNotifications {
     shown = true;
   }
 
-  public void notifyModuleInvalid() {
+  public void notifyProjectStorageInvalid() {
     if (shown) {
       return;
     }
@@ -84,7 +84,7 @@ public class SonarLintProjectNotifications {
     shown = true;
   }
 
-  public void notifyModuleStale() {
+  public void notifyProjectStorageStale() {
     if (shown) {
       return;
     }
